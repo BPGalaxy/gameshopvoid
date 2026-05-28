@@ -21,7 +21,7 @@ def homepage(request):
 
         sendrequest = requests.request("GET",  "https://daramet.com/api/LastDonates/", headers={"Authorization": Authorization})
         print(sendrequest.json)
-        for entry in response:
+        for entry in sendrequest:
             donate_amount = entry.get('donate_amount')
 
             message = entry.get('donator_detalis')
