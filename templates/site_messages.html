@@ -4,7 +4,7 @@
 
 
 {% if messages %}
-<div class="onetimemessages-container">
+<div class="onetimemessages-container" style="position: fixed; z-index: 9999; top: 20px; display: flex; flex-direction: column; gap: 10px;">
     {% for message in messages %}
     <div class="onetimemessage onetimemessage-{{ message.tags }}" id="onetimemessage-{{ forloop.counter }}">
         <div class="auth-{{message.tags}} visible" id="errorMsg">{{ message }}</div>
