@@ -41,6 +41,7 @@ def homepage(request):
                     getuser.purchasedGames.append(game)
                     getuser.save()
                     purchasedGames = Status.objects.get(username=request.user.username).purchasedGames
+                    ms.success(request, "Purchase successful! thanks for buying our game!")
         
     return render(request,'homepage.html', {'purchasedGames': purchasedGames, 'purchaseId': purchaseId, 'games':games})
 
