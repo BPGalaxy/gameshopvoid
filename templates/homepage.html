@@ -5,7 +5,7 @@
 {% block content %}
 
 {% if not user.is_authenticated %}
-  <div class="game-card" style="position: fixed; top: 40px; right: 20px; padding:20px; text-align: center; border-radius: 5px; z-index: 1000;">
+  <div class="game-card" style="position:static; margin:-20px 0 20px 0; top: 40px; right: 20px; padding:20px; text-align: center; border-radius: 5px; z-index: 1000;">
     <div class="game-title" style="font-size: 15px; margin-bottom: 20px;">Not Registered</div>
     <a class="pay-btn" id="registerbtn" href="{% url 'register' %}" target="_blank" rel="noopener" style="font-size: 10px;">
       <span class="btn-shine"></span>
@@ -13,7 +13,7 @@
     </a>
   </div>
 {% else %}
-  <div class="game-card" style="position: fixed; top: 40px; right: 20px; padding:20px; text-align: center; border-radius: 5px; z-index: 1000;">
+  <div class="game-card" style="position:static; margin:-20px 0 20px 0; top: 40px; right: 20px; padding:20px; text-align: center; border-radius: 5px; z-index: 1000;">
     <div class="game-title" style="font-size: 15px; margin-bottom: 20px;">Username: {{ user.username }}</div>
     <a class="pay-btn" id="logoutbtn" href="{% url 'logout' %}" target="_blank" rel="noopener">
       <span class="btn-shine"></span>
@@ -121,7 +121,7 @@
                 <span class="btn-shine"></span>
                 Unlock Now
               </a>
-              <form action="{% url 'homepage' %}" method="POST">
+              <form action="{% url 'homepage' %}" method="POST" style="all: unset; display: contents;">
                 {% csrf_token %}
                 <button type="submit" class="check-btn" onclick="location.reload()">↻ &nbsp;Check Purchase</button>
                 <div class="secure-note">Secured payment via Daramet</div>
