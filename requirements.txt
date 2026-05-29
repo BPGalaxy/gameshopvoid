@@ -6,3 +6,4 @@ django-sslserver==0.22
 djangoql==0.19.1
 gunicorn==25.3.0
 requests==2.32.4
+whitenoise==6.12.0
