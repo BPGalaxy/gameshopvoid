@@ -29,7 +29,7 @@
 {% endif %}
 {% for game in games %}
   <div class="page-wrapper">
-    <div class="game-card" id="gameCard{{game.name}}">
+    <div class="game-card" id="gameCard{{game.id}}">
 
       <!-- Banner -->
       <div class="game-banner" style="z-index: 1;">
@@ -55,7 +55,7 @@
       </div>
 
         <!-- Lock overlay -->
-        <div class="lock-overlay {% if game.name in purchasedGames %}hidden{% endif %}" id="lockOverlay{{game.name}}" style="z-index: 10;">
+        <div class="lock-overlay {% if game.id in purchasedGames %}hidden{% endif %}" id="lockOverlay{{game.id}}" style="z-index: 10;">
           <div class="lock-icon">
             <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="12" y="27" width="36" height="26" rx="3" fill="rgba(255,60,110,0.15)" stroke="#ff3c6e" stroke-width="1.5"/>
@@ -68,7 +68,7 @@
         </div>
 
         <!-- Unlock success overlay -->
-        <div class="unlock-overlay" id="unlockOverlay{{game.name}}">
+        <div class="unlock-overlay" id="unlockOverlay{{game.id}}">
           <div class="checkmark">✦</div>
         </div>
       </div>
@@ -106,7 +106,7 @@
         <div class="divider"></div>
           <div class="auth-success {% if not purchase_status %}visible{% endif %}">⚠️ Important: Keep the pre-filled message unchanged — it contains your unique purchase ID needed to verify your order.</div><br>
 
-        <div class="purchase-section" id="purchaseSection{{game.name}}" {% if game.name in purchasedGames %}style="display: none;"{% endif %}>
+        <div class="purchase-section" id="purchaseSection{{game.id}}" {% if game.id in purchasedGames %}style="display: none;"{% endif %}>
           <div class="price-block">
             <div class="price-label">Standard Edition</div>
             {% if game.price == 0 %}
@@ -117,13 +117,13 @@
             {% endif %}
           </div>
           {% if game.price == 0 %}
-            <a class="pay-btn" id="payBtn{{game.name}}" name="{{game.name}}" onclick="openModal{{game.name}}()" target="_blank" rel="noopener">
+            <a class="pay-btn" id="payBtn{{game.id}}" name="{{game.id}}" onclick="openModal{{game.id}}()" target="_blank" rel="noopener">
               <span class="btn-shine"></span>
               Get for Free
             </a>
           {% else %}
             <div class="btn-group">
-              <a class="pay-btn" id="payBtn{{game.name}}" name="{{game.name}}" onclick="openModal{{game.name}}()" target="_blank" rel="noopener">
+              <a class="pay-btn" id="payBtn{{game.id}}" name="{{game.id}}" onclick="openModal{{game.id}}()" target="_blank" rel="noopener">
                 <span class="btn-shine"></span>
                 Unlock Now
               </a>
@@ -135,7 +135,7 @@
             </div>
           {% endif %}
         </div>
-        <div class="unlocked-banner {% if game.name in purchasedGames %}visible{% endif %}" id="unlockedBanner{{game.name}}">
+        <div class="unlocked-banner {% if game.id in purchasedGames %}visible{% endif %}" id="unlockedBanner{{game.id}}">
             <div class="u-icon">✦</div>
             <div>
               <div class="u-text">Game Unlocked</div>
@@ -146,32 +146,32 @@
       </div>
     </div>
   </div>
-  <div class="modal-bg" id="modalBg{{game.name}}">
+  <div class="modal-bg" id="modalBg{{game.id}}">
     <div class="modal">
       <div class="modal-title">Please Log In</div>
-      <div class="modal-sub">// You must be logged in to purchase {{game.name}}</div>
+      <div class="modal-sub">// You must be logged in to purchase {{game.id}}</div>
       <div class="modal-actions">
-        <a class="pay-btn" id="payBtn{{game.name}}" name="{{game.name}}" href="{% url 'login' %}" target="_blank" rel="noopener">
+        <a class="pay-btn" id="payBtn{{game.id}}" name="{{game.id}}" href="{% url 'login' %}" target="_blank" rel="noopener">
               <span class="btn-shine"></span>
               Login
             </a>
-        <button class="btn-cancel" onclick="closeModal{{game.name}}()">Cancel</button>
+        <button class="btn-cancel" onclick="closeModal{{game.id}}()">Cancel</button>
       </div>
     </div>
   </div>
 </div>
-  <div class="modal-bg" id="modalBgDonate{{game.name}}">
+  <div class="modal-bg" id="modalBgDonate{{game.id}}">
     <div class="modal">
       <div class="modal-title">Give us a donate if you like</div>
       <div class="modal-sub">// You can play this game for free but your donate will help us keep the game alive!</div>
       <div class="modal-actions">
-        <a class="pay-btn" id="payBtn{{game.name}}" name="{{game.name}}" href="https://daramet.com/BP_Galaxy/" target="_blank" rel="noopener">
+        <a class="pay-btn" id="payBtn{{game.id}}" name="{{game.id}}" href="https://daramet.com/LouGame/" target="_blank" rel="noopener">
               <span class="btn-shine"></span>
               Donate
             </a>
         <form action="{% url 'unlock_game' %}" method="POST" style="display: inline;">
           {% csrf_token %}
-          <input type="hidden" name="game_name" value="{{game.name}}">
+          <input type="hidden" name="game_name" value="{{game.id}}">
           <input type="hidden" name="purchaseId" value="{{purchaseId}}">
           <button type="submit" class="btn-cancel" href="{% url 'unlock_game' %}">Unlock Anyway</button>
         </form>
@@ -179,18 +179,18 @@
     </div>
   </div>
   <script>
-    function openModal{{game.name}}() {
+    function openModal{{game.id}}() {
       {% if not user.is_authenticated %}
-        document.getElementById('modalBg{{game.name}}').classList.add('open');
+        document.getElementById('modalBg{{game.id}}').classList.add('open');
       {% elif user.is_authenticated and game.price == 0 %}
-        document.getElementById('modalBgDonate{{game.name}}').classList.add('open');
+        document.getElementById('modalBgDonate{{game.id}}').classList.add('open');
       {% else %}
-        window.location.href = "https://daramet.com/BP_Galaxy?webintent&donate={{game.price}}&message={{game.name}}: {{purchaseId}}";
+        window.location.href = "https://daramet.com/LouGame?webintent&donate={{game.price}}&message={{game.id}}: {{purchaseId}}";
       {% endif %}
     }
 
-    function closeModal{{game.name}}() {
-      document.getElementById('modalBg{{game.name}}').classList.remove('open');
+    function closeModal{{game.id}}() {
+      document.getElementById('modalBg{{game.id}}').classList.remove('open');
       resetModal();
     }
 
@@ -277,7 +277,7 @@
   });
 
   document.getElementById('document').addEventListener('load', function() {
-    if ({% if game.name in purchasedGames %}true{% else %}false{% endif %}) {
+    if ({% if game.id in purchasedGames %}true{% else %}false{% endif %}) {
       unlockGame();
     }
   });
