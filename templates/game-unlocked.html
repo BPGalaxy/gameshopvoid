@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VOIDRIFT — Premium Game</title>
+  <link rel="stylesheet" href="voidrift.css"/>
+</head>
+<body>
+
+<div class="page-wrapper">
+  <div class="label">// Featured Release — 2026</div>
+
+  <div class="game-card" id="gameCard">
+
+    <!-- Banner -->
+    <div class="game-banner">
+      <div class="banner-art">
+        <div class="grid-floor"></div>
+        <div class="planet"></div>
+        <div class="ring"></div>
+        <div class="ring ring2"></div>
+        <div class="scan-line"></div>
+      </div>
+
+      <!-- Unlock success overlay -->
+      <div class="unlock-overlay visible" id="unlockOverlay">
+        <div class="checkmark">✦</div>
+      </div>
+    </div>
+
+    <!-- Game Info -->
+    <div class="game-info">
+
+      <div class="game-meta">
+        <div>
+          <div class="game-title">VOIDRIFT</div>
+          <div class="game-subtitle">// DEEP SPACE TACTICAL RPG &nbsp;·&nbsp; V 3.1.0</div>
+        </div>
+        <div class="rating-badge">
+          <div class="stars">★★★★★</div>
+          <div class="rating-num">4.9</div>
+        </div>
+      </div>
+
+      <div class="tags">
+        <div class="tag">Sci-Fi</div>
+        <div class="tag">Tactical</div>
+        <div class="tag highlight">RPG</div>
+        <div class="tag">Multiplayer</div>
+        <div class="tag">2026</div>
+      </div>
+
+      <div class="description">
+        Navigate fractured star systems, command elite crews, and rewrite the fate of the galaxy.
+        VOIDRIFT blends deep tactical combat with rich narrative choices across 60+ hours of
+        procedurally-shaped campaigns. Every decision cascades — alliances, betrayals, and
+        the void itself will remember what you do.
+      </div>
+
+      <div class="features">
+        <div class="feature-item"><div class="dot"></div> 60+ Hour Campaign</div>
+        <div class="feature-item"><div class="dot"></div> Co-op Multiplayer (4P)</div>
+        <div class="feature-item"><div class="dot"></div> Expansion Pack I</div>
+        <div class="feature-item"><div class="dot"></div> Modding Toolkit</div>
+        <div class="feature-item"><div class="dot"></div> 4K + HDR Support</div>
+        <div class="feature-item"><div class="dot"></div> Ranked Competitive</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="purchase-section" id="purchaseSection" style="display:none;">
+        <div class="price-block">
+          <div class="price-label">Standard Edition</div>
+          <div class="price"><span>$</span>29<small style="font-size:20px">.99</small></div>
+          <div>
+            <span class="price-old">$49.99</span>
+            <span class="price-save">SAVE 40%</span>
+          </div>
+          <div class="price-note" style="margin-top:8px">One-time purchase · All platforms</div>
+        </div>
+
+        <div class="btn-group">
+          <a class="pay-btn" id="payBtn" href="https://buy.stripe.com/your-link" target="_blank" rel="noopener">
+            <span class="btn-shine"></span>
+            Unlock Now
+          </a>
+          <button class="check-btn" onclick="location.reload()">↻ &nbsp;Check Purchase</button>
+          <div class="secure-note">Secured payment via Stripe</div>
+        </div>
+      </div>
+
+      <!-- Unlocked banner -->
+      <div class="unlocked-banner visible" id="unlockedBanner">
+        <div class="u-icon">✦</div>
+        <div>
+          <div class="u-text">Game Unlocked</div>
+          <div class="u-sub">Full access granted · Check your email for download link</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-title">Complete Purchase</div>
+    <div class="modal-sub">// VOIDRIFT — Standard Edition · $29.99</div>
+
+    <div class="modal-form" id="modalForm">
+      <div class="input-group">
+        <label>Cardholder Name</label>
+        <input type="text" placeholder="Jane Doe" id="nameInput"/>
+      </div>
+      <div class="input-group">
+        <label>Card Number</label>
+        <input type="text" placeholder="4242 4242 4242 4242" maxlength="19" id="cardInput" oninput="formatCard(this)"/>
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>Expiry</label>
+          <input type="text" placeholder="MM / YY" maxlength="7" id="expiryInput" oninput="formatExpiry(this)"/>
+        </div>
+        <div class="input-group">
+          <label>CVC</label>
+          <input type="text" placeholder="•••" maxlength="3" id="cvcInput"/>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-confirm" onclick="processPayment()">Pay $29.99</button>
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+
+    <div class="processing" id="processingView">
+      <div class="spinner"></div>
+      <div class="processing-text">Processing payment...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('modalBg').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modalBg').classList.remove('open');
+    resetModal();
+  }
+
+  function resetModal() {
+    document.getElementById('modalForm').classList.remove('hidden');
+    document.getElementById('processingView').classList.remove('active');
+    document.getElementById('nameInput').value = '';
+    document.getElementById('cardInput').value = '';
+    document.getElementById('expiryInput').value = '';
+    document.getElementById('cvcInput').value = '';
+  }
+
+  function processPayment() {
+    const name = document.getElementById('nameInput').value.trim();
+    const card = document.getElementById('cardInput').value.trim();
+    const expiry = document.getElementById('expiryInput').value.trim();
+    const cvc = document.getElementById('cvcInput').value.trim();
+
+    if (!name || card.length < 19 || expiry.length < 7 || cvc.length < 3) {
+      // Shake inputs
+      const inputs = document.querySelectorAll('.modal-form input');
+      inputs.forEach(i => {
+        i.style.borderColor = 'rgba(255,60,110,0.6)';
+        setTimeout(() => i.style.borderColor = '', 1200);
+      });
+      return;
+    }
+
+    document.getElementById('modalForm').classList.add('hidden');
+    document.getElementById('processingView').classList.add('active');
+
+    setTimeout(() => {
+      closeModal();
+      unlockGame();
+    }, 2200);
+  }
+
+  function unlockGame() {
+    // Remove lock overlay
+    document.getElementById('lockOverlay').classList.add('hidden');
+    document.getElementById('unlockOverlay').classList.add('visible');
+
+    // Swap purchase section for unlocked banner
+    setTimeout(() => {
+      document.getElementById('purchaseSection').style.display = 'none';
+      document.getElementById('unlockedBanner').classList.add('visible');
+
+      // Unlock locked features
+      document.querySelectorAll('.feature-item.locked-feature').forEach(el => {
+        el.classList.remove('locked-feature');
+      });
+    }, 600);
+  }
+
+  function formatCard(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1 ').trim();
+  }
+
+  function formatExpiry(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 3) v = v.substring(0,2) + ' / ' + v.substring(2);
+    input.value = v;
+  }
+
+  // Close modal on bg click
+  document.getElementById('modalBg').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
