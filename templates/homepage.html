@@ -17,13 +17,13 @@
     <div class="game-title" style="font-size: 15px; margin-bottom: 20px;">Username: {{ user.username }}</div>
     <a class="pay-btn" id="logoutbtn" href="{% url 'logout' %}" target="_blank" rel="noopener">
       <span class="btn-shine"></span>
-      Logout
+      logout
     </a>
     {% if user.is_staff %}
-      <a class="pay-btn" id="logoutbtn" href="/admin/" target="_blank" rel="noopener">
-        <span class="btn-shine"></span>
-        Open admin
-      </a>
+    <a class="pay-btn" id="logoutbtn" href="admin/" target="_blank" rel="noopener">
+      <span class="btn-shine"></span>
+      Open admin
+    </a>
     {% endif %}
   </div>
 {% endif %}
@@ -165,7 +165,7 @@
       <div class="modal-title">Give us a donate if you like</div>
       <div class="modal-sub">// You can play this game for free but your donate will help us keep the game alive!</div>
       <div class="modal-actions">
-        <a class="pay-btn" id="payBtn{{game.name}}" name="{{game.name}}" href="https://daramet.com/LouGame/" target="_blank" rel="noopener">
+        <a class="pay-btn" id="payBtn{{game.name}}" name="{{game.name}}" href="https://daramet.com/BP_Galaxy/" target="_blank" rel="noopener">
               <span class="btn-shine"></span>
               Donate
             </a>
@@ -185,7 +185,7 @@
       {% elif user.is_authenticated and game.price == 0 %}
         document.getElementById('modalBgDonate{{game.name}}').classList.add('open');
       {% else %}
-        window.location.href = "https://daramet.com/LouGame/"?webintent&donate={{game.price}}&message={{game.name}}: {{purchaseId}}";
+        window.location.href = "https://daramet.com/BP_Galaxy?webintent&donate={{game.price}}&message={{game.name}}: {{purchaseId}}";
       {% endif %}
     }
 
