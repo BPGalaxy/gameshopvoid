@@ -17,7 +17,11 @@
     <div class="game-title" style="font-size: 15px; margin-bottom: 20px;">Username: {{ user.username }}</div>
     <a class="pay-btn" id="logoutbtn" href="{% url 'logout' %}" target="_blank" rel="noopener">
       <span class="btn-shine"></span>
-      logout
+      Logout
+    </a>
+    <a class="pay-btn" id="logoutbtn" href="/admin/" target="_blank" rel="noopener">
+      <span class="btn-shine"></span>
+      Open admin
     </a>
   </div>
 {% endif %}
