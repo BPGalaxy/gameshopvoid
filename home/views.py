@@ -33,7 +33,7 @@ def homepage(request):
                     game = message[:a]
                 except:
                     continue
-                game_status = Game.objects.get(name=game)
+                game_status = Game.objects.get(id=game)
                 if game in purchasedGames:
                     continue
                 if donate_amount == game_status.price:
