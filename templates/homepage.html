@@ -19,10 +19,12 @@
       <span class="btn-shine"></span>
       Logout
     </a>
-    <a class="pay-btn" id="logoutbtn" href="/admin/" target="_blank" rel="noopener">
-      <span class="btn-shine"></span>
-      Open admin
-    </a>
+    {% if user.is_staff %}
+      <a class="pay-btn" id="logoutbtn" href="/admin/" target="_blank" rel="noopener">
+        <span class="btn-shine"></span>
+        Open admin
+      </a>
+    {% endif %}
   </div>
 {% endif %}
 {% for game in games %}
