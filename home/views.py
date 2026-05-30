@@ -53,10 +53,9 @@ def unlock_game(request):
     if request.method == "POST":
         game_name = request.POST.get("game_name")
         purchaseId = request.POST.get("purchaseId")
-        print(Game.objects.get(name=game_name).price)
-        if Game.objects.get(name=game_name).price == 0:
+        if Game.objects.get(id=game_name).price == 0:
             user_status = Status.objects.get(username=request.user.username)
-            user_status.purchasedGames.append(game_name)
+            user_status.purchasedGames.append(int(game_name))
             user_status.save()
             ms.success(request, f"{game_name} Unlocked for free! Thanks for playing our game!")
         return redirect('homepage')
