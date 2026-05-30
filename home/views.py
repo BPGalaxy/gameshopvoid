@@ -17,15 +17,15 @@ def homepage(request):
             ms.error(request, "Not logged in")
             return render(request,'homepage.html', {'purchasedGames': purchasedGames, 'purchaseId': purchaseId, 'games':games})
 
-        Authorization = "ecf9eb5314cf8abe6de9f52253b5be268f85066bd8df114f6f4c1f9ec2c1f154"
+        Authorization = "ba9c15fa81fc2a4805a4d5032ec491c2f8bde939840e773690791ed15ea74204"
 
-        sendrequest = requests.request("GET",  "https://daramet.com/api/LastDonates/", headers={"Authorization": Authorization})
-        print(sendrequest.json)
-        for entry in sendrequest:
+        sendrequest = requests.request("GET",  "https://daramet.com/api/LastDonates", headers={"Authorization": Authorization})
+        jsondata = sendrequest.json()
+        print("asda")
+        for entry in jsondata:
             donate_amount = entry.get('donate_amount')
 
-            message = entry.get('donator_detalis')
-
+            message = entry.get('message')
             if purchaseId in message:
                 print("aaa")
                 try:
@@ -36,11 +36,13 @@ def homepage(request):
                 game_status = Game.objects.get(id=game)
                 if game in purchasedGames:
                     continue
-                if donate_amount == game_status.price:
+                
+                if donate_amount/10 == game_status.price:
                     getuser = Status.objects.get(username=request.user.username)
-                    getuser.purchasedGames.append(game)
+                    getuser.purchasedGames.append(int(game))
                     getuser.save()
                     purchasedGames = Status.objects.get(username=request.user.username).purchasedGames
+                    ms.success(request, "Purchase succefull! Thanks for buying our game!")
         
     return render(request,'homepage.html', {'purchasedGames': purchasedGames, 'purchaseId': purchaseId, 'games':games})
 
