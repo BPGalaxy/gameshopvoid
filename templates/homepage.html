@@ -185,7 +185,7 @@
       {% elif user.is_authenticated and game.price == 0 %}
         document.getElementById('modalBgDonate{{game.name}}').classList.add('open');
       {% else %}
-        window.location.href = "https://daramet.com/BP_Galaxy?webintent&donate={{game.price}}&message={{game.name}}: {{purchaseId}}";
+        window.location.href = "https://daramet.com/LouGame/"?webintent&donate={{game.price}}&message={{game.name}}: {{purchaseId}}";
       {% endif %}
     }
 
